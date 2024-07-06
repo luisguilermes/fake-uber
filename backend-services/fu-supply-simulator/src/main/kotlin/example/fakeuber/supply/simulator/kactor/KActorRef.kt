@@ -1,5 +1,6 @@
 package `in`.example.fakeuber.supply.simulator.kactor
 
+import example.fakeuber.supply.simulator.actor.MainActor
 import kotlinx.coroutines.channels.SendChannel
 
 /**
@@ -15,7 +16,7 @@ class KActorRef<T> internal constructor(
     }
 
     companion object KActorRefOps {
-        suspend infix fun <T> KActorRef<T>.`!`(msg: T) {
+        suspend infix fun KActorRef<T>.`!`(msg: MainActor.Start) {
             tell(msg)
         }
     }
