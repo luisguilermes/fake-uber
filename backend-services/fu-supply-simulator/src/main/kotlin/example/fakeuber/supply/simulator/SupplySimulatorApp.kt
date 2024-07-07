@@ -1,6 +1,7 @@
 package example.fakeuber.supply.simulator
 
 import example.fakeuber.supply.simulator.actor.MainActor
+import example.fakeuber.supply.simulator.actor.SupplierActor
 import example.fakeuber.supply.simulator.kactor.kactorSystem
 import `in`.example.fakeuber.supply.simulator.kactor.KActorRef.KActorRefOps.`!`
 import io.ktor.client.features.websocket.*
@@ -11,8 +12,8 @@ var streets = mutableListOf("Rua do K", "Rua Soninho de Março", "Rua Sem Perdõ
 var history = mutableListOf("")
 
 suspend fun main(): Unit = coroutineScope {
-    val mainKActor = kactorSystem(MainActor.behavior())
-    mainKActor `!` MainActor.Start
+    val mainKActorRef = kactorSystem(MainActor.behavior)
+    mainKActorRef `!` MainActor.Start
 }
 //fun main() {
 //    val client = HttpClient {

@@ -1,57 +1,27 @@
 package example.fakeuber.supply.simulator.actor
 
-import example.fakeuber.supply.simulator.kactor.*
-import `in`.example.fakeuber.supply.simulator.kactor.KActorRef.KActorRefOps.`!`
+import example.fakeuber.supply.simulator.kactor.KBehavior
+import example.fakeuber.supply.simulator.kactor.receive
+import example.fakeuber.supply.simulator.kactor.same
+import example.fakeuber.supply.simulator.kactor.spawn
 import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.seconds
 
 object MainActor {
     object Start
+
     val suppliers = listOf(
         "6ceb49b0-0aea-4f75-9a58-64a3c49d5b73",
-        "3ef0748d-fee9-4b0a-9fe6-4b55fedc9672"
+//        "3ef0748d-fee9-4b0a-9fe6-4b55fedc9672",
+//        "2b366c46-e229-4bbd-a5fc-9eea19741d93",
+//        "730e8d56-b247-42a9-aca5-a6f1665005ba"
     )
 
-    fun behavior(): KBehavior<Start> = receive { ctx, _ ->
-        val suppliersActors = suppliers.map {
-            it to ctx.spawn("supplier-$it", blocking(SupplierActor.behavior))
-        }
-
-        for ((id, actor) in suppliersActors) {
-//            actor `!` SupplierActor.Create(id)
+    val behavior: KBehavior<Start> =  receive { ctx, _ ->
+        suppliers.forEach {
+            it to ctx.spawn("supplier-$it", SupplierActor.behavior)
             delay(1 * 500L)
         }
-
-
-//        for (supplier in suppliers) {
-//            val actorName = "supplier-$supplier"
-//            val supplierActor = ctx.spawn(actorName, blocking(SupplierActor.behavior))
-////            supplierActor `!` FileReader.Tick
-//            supplierActor `!` SupplierActor.Create(supplier)
-////            delay(1 * 500L)
-//        }
         same()
     }
 }
 
-object FileReader {
-
-    object TimerKey
-    object Tick
-
-    fun behavior(): KBehavior<Tick> = withTimers { timers ->
-            timers.startSingleTimer(TimerKey, Tick, 2.seconds)
-            processTick(0, timers)
-        }
-
-    private fun processTick(counter: Int, timers: TimerScheduler<Tick>): KBehavior<Tick> =
-        receive { ctx, _ ->
-            ctx.log.info("Another second passed")
-            if (counter == 10) {
-                timers.cancel(TimerKey)
-                stopped()
-            } else {
-                processTick(counter + 1, timers)
-            }
-        }
-}
