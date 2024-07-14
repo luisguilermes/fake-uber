@@ -1,82 +1,27 @@
 package example.fakeuber.supply.simulator
 
-import example.fakeuber.supply.simulator.actor.MainActor
 import example.fakeuber.supply.simulator.actor.SupplierActor
-import example.fakeuber.supply.simulator.kactor.kactorSystem
-import `in`.example.fakeuber.supply.simulator.kactor.KActorRef.KActorRefOps.`!`
-import io.ktor.client.features.websocket.*
-import io.ktor.http.cio.websocket.*
-import kotlinx.coroutines.*
+import example.fakeuber.supply.simulator.kactor.AbstractActor
+import example.fakeuber.supply.simulator.kactor.Actor
+import kotlinx.coroutines.sync.Semaphore
+import example.fakeuber.supply.simulator.kactor.Result
 
-var streets = mutableListOf("Rua do K", "Rua Soninho de Março", "Rua Sem Perdões", "Rua Meia Idade", "Rua do Patocórnio", "Rua do Deninho")
-var history = mutableListOf("")
+private val semaphore = Semaphore(1)
 
-suspend fun main(): Unit = coroutineScope {
-    val mainKActorRef = kactorSystem(MainActor.behavior)
-    mainKActorRef `!` MainActor.Start
-}
-//fun main() {
-//    val client = HttpClient {
-//        install(WebSockets)
-//    }
-//    runBlocking {
-//        client.webSocket(method = HttpMethod.Get, host = "localhost", port = 8080, path = "/chat") {
-//
-//            val startReceiveMessages = launch { receiveMessages() }
-//            val startSendStreet = launch { sendStreet() }
-//
-//            startSendStreet.join()
-//            startReceiveMessages.cancelAndJoin()
-//        }
-//    }
-//    client.close()
-//    println("Connection closed. Goodbye!")
-//}
 
-suspend fun DefaultClientWebSocketSession.receiveMessages() {
-    try {
-        for (message in incoming) {
-            message as? Frame.Text ?: continue
 
-            val message = message.readText().split(":")
-
-            if (message.size != 2) continue
-
-            val rua = message[0]
-            val vindo = message[1] == "coming"
-
-            if (vindo) streets.remove(rua) else streets.add(rua)
+suspend fun main(args: Array<String>) {
+    val referee = object : AbstractActor<Int>("Referee") {
+        override fun onReceive(message: Int, sender: Result<Actor<Int>>) {
+            println("Game ended after $message shots")
+            semaphore.release()
         }
-    } catch (e: Exception) {
-        println("Error while receiving" + e.localizedMessage)
     }
-}
 
-suspend fun DefaultClientWebSocketSession.sendStreet() {
-    while (true) {
-        var street = streets.random()
+    val player1 = SupplierActor("Player 1", "Ping", referee)
+    val player2 = SupplierActor("Player 2", "Pong", referee)
+    semaphore.acquire()
+    player1.tell(0, Result(player2))
+    semaphore.acquire()
 
-        while (history.last() == street){
-            street = streets.random()
-        }
-
-        history.add(street)
-
-        println("Sending street: $street")
-        sendMessage("$street:vindo")
-
-        val tempoParaProximaRua = (5..15).shuffled().first()
-        delay((tempoParaProximaRua * 1000).toLong())
-
-        sendMessage("$street:saindo")
-    }
-}
-
-suspend fun DefaultClientWebSocketSession.sendMessage(message: String) {
-    try {
-        send(message)
-    } catch (e: Exception) {
-        println("Error while sending" + e.localizedMessage)
-        return
-    }
 }
