@@ -9,7 +9,7 @@ distributed systems, and service orchestration. By working on this project, I ai
 microservices, API design, event-driven architectures, and more.
 
 ## Project Structure
-- [Backend Services](backend-services/README.md)
+- [Backend Services](backend-services)
 
 ## Bibliography & References
 - [Microservices patterns](https://microservices.io/book)
