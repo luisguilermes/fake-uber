@@ -11,5 +11,5 @@ plugins {
 }
 
 rootProject.name = "backend-services"
-include("fu-supply-simulator")
-include("fu-supply-satellite")
+//include("fu-supply-simulator")
+//include("fu-supply-satellite")
