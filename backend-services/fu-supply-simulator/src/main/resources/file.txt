@@ -1,1 +1,0 @@
-KActor is the best actor model implementation for Kotlin (...joking 😝)
