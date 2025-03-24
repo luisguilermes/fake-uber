@@ -13,6 +13,7 @@ plugins {
 rootProject.name = "backend-services"
 
 include(
+    "fu-business-service",
     "fu-supply-service",
 )
 //include("fu-supply-simulator")
