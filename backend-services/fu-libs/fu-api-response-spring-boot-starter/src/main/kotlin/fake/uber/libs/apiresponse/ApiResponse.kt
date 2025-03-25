@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class ApiResponse<T>(
     val status: String,
     val message: String,
-    val data: T? = null,
+    val content: T? = null,
     val errors: List<ApiError>? = null,
     val meta: Meta? = null,
 ) {
@@ -15,15 +15,11 @@ data class ApiResponse<T>(
             message: String,
             data: T,
             meta: Meta? = null,
-        ): ApiResponse<T> {
-            return ApiResponse("success", message, data, null, meta)
-        }
+        ): ApiResponse<T> = ApiResponse("success", message, data, null, meta)
 
         fun error(
             message: String,
             errors: List<ApiError>,
-        ): ApiResponse<Nothing> {
-            return ApiResponse("error", message, null, errors, null)
-        }
+        ): ApiResponse<Nothing> = ApiResponse("error", message, null, errors, null)
     }
 }
