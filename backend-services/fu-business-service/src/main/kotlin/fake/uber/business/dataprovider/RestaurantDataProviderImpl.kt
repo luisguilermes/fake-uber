@@ -11,7 +11,12 @@ class RestaurantDataProviderImpl(
     private val restaurantRepository: RestaurantRepository,
 ) : BusinessDataProvider {
     override fun getById(id: UUID): Business? = restaurantRepository.findById(id)
-    override fun getNearby(lat: Double, lng: Double, radius: Int, page: Int, size: Int): Set<Business> {
-        return emptySet()
-    }
+
+    override fun getNearby(
+        lat: Double,
+        lng: Double,
+        radius: Int,
+        page: Long,
+        size: Long,
+    ): Set<Business> = restaurantRepository.getNearby(lat, lng, radius, page, size)
 }

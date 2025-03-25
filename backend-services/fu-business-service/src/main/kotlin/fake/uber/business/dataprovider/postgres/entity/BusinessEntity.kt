@@ -1,6 +1,5 @@
 package fake.uber.business.dataprovider.postgres.entity
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import fake.uber.business.domain.entity.Business
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
@@ -12,7 +11,7 @@ data class BusinessEntity(
     val lat: Double,
     val lng: Double,
 ) {
-    fun toDomain(objectMapper: ObjectMapper): Business? =
+    fun toDomain(): Business =
         Business(
             id = id,
             name = name,

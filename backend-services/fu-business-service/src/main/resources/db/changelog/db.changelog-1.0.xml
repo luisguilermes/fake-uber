@@ -11,7 +11,8 @@
                 id UUID PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 lng DOUBLE PRECISION NOT NULL,
-                lat DOUBLE PRECISION NOT NULL
+                lat DOUBLE PRECISION NOT NULL,
+                created_at TIMESTAMP NOT NULL
             );
         </sql>
     </changeSet>
