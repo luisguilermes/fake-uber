@@ -1,8 +1,8 @@
 package fake.uber.business.dataprovider.postgres
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import fake.uber.business.dataprovider.postgres.entity.BusinessEntity
 import fake.uber.business.dataprovider.postgres.statements.BusinessStatements.GET_BUSINESS_BY_ID
+import fake.uber.business.dataprovider.postgres.statements.BusinessStatements.GET_NEARBY_BUSINESS
 import fake.uber.business.domain.entity.Business
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
@@ -14,7 +14,6 @@ import java.util.UUID
 class RestaurantRepository(
     @Qualifier("writeJdbcTemplate") private val writeJdbcTemplate: NamedParameterJdbcTemplate,
     @Qualifier("readJdbcTemplate") private val readJdbcTemplate: NamedParameterJdbcTemplate,
-    private val objectMapper: ObjectMapper,
 ) {
     fun findById(
         id: UUID,
@@ -30,6 +29,26 @@ class RestaurantRepository(
                 BusinessEntity.Mapper,
             )
 
-        return query.firstOrNull()?.toDomain(objectMapper)
+        return query.firstOrNull()?.toDomain()
+    }
+
+    fun getNearby(
+        lat: Double,
+        lng: Double,
+        radius: Int,
+        page: Long,
+        size: Long,
+        isReadOnly: Boolean = true,
+    ): Set<Business> {
+        val jdbcTemplate = if (isReadOnly) readJdbcTemplate else writeJdbcTemplate
+        val params = MapSqlParameterSource().addValue("page", page).addValue("size", size)
+
+        val query =
+            jdbcTemplate.query(
+                GET_NEARBY_BUSINESS,
+                params,
+                BusinessEntity.Mapper,
+            )
+        return query.map { it.toDomain() }.toSet()
     }
 }

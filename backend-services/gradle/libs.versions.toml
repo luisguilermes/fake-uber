@@ -1,9 +1,12 @@
 [versions]
-kotlin = "2.1.0"
-ktlint = "11.6.1"
+kotlin = "2.0.21"
+ktlint = "12.1.1"
 spring-boot = "3.4.3"
 spring-dependency-management = "1.1.7"
 test-logger = "3.2.0"
+
+jackson = "2.18.0"
+
 # Database
 postgresql = "42.7.5"
 postgis = "2024.1.0"
@@ -12,9 +15,11 @@ postgis = "2024.1.0"
 # Database
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 postgis-jdbc = { module = "net.postgis:postgis-jdbc", version.ref = "postgis" }
+jackson = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 liquibase = { module = "org.liquibase:liquibase-core", version = "4.31.0" }
 # Spring Boot
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot" }
+spring-boot-autoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot" }
 spring-boot-starter-jbc = { module = "org.springframework.boot:spring-boot-starter-jdbc", version.ref = "spring-boot" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot"}

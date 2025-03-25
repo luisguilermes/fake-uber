@@ -8,8 +8,10 @@ plugins {
 }
 
 dependencies {
+
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.jbc)
+    implementation(project(":fu-libs:fu-api-response-spring-boot-starter"))
 
     implementation(libs.postgresql)
     implementation(libs.postgis.jdbc) {

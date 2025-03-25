@@ -14,7 +14,6 @@ rootProject.name = "backend-services"
 
 include(
     "fu-business-service",
+    "fu-libs:fu-api-response-spring-boot-starter",
     "fu-supply-service",
 )
-//include("fu-supply-simulator")
-//include("fu-supply-satellite")

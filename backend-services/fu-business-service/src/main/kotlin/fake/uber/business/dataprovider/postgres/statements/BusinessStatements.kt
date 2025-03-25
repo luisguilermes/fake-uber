@@ -15,4 +15,15 @@ object BusinessStatements {
         INSERT INTO businesses (id, name, lng, lat) 
         VALUES (:id, :name, :lng, :lat)
     """
+
+    const val GET_NEARBY_BUSINESS = """
+        SELECT 
+            id, 
+            name,
+            lng
+            lat
+        FROM businesses
+        ORDER BY created_at ASC
+        LIMIT :size OFFSET :page
+    """
 }

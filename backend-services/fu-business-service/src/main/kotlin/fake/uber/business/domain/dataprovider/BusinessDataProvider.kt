@@ -5,5 +5,12 @@ import java.util.UUID
 
 interface BusinessDataProvider {
     fun getById(id: UUID): Business?
-    fun getNearby(lat: Double, lng: Double, radius: Int, page: Int, size: Int): Set<Business>
+
+    fun getNearby(
+        lat: Double,
+        lng: Double,
+        radius: Int,
+        page: Long,
+        size: Long,
+    ): Set<Business>
 }
