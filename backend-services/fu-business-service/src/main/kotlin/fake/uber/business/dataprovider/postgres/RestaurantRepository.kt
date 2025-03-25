@@ -39,9 +39,9 @@ class RestaurantRepository(
         page: Long,
         size: Long,
         isReadOnly: Boolean = true,
-    ): Set<Business> {
+    ): List<Business> {
         val jdbcTemplate = if (isReadOnly) readJdbcTemplate else writeJdbcTemplate
-        val params = MapSqlParameterSource().addValue("page", page).addValue("size", size)
+        val params = MapSqlParameterSource().addValue("page", page).addValue("size", size + 1)
 
         val query =
             jdbcTemplate.query(
@@ -49,6 +49,6 @@ class RestaurantRepository(
                 params,
                 BusinessEntity.Mapper,
             )
-        return query.map { it.toDomain() }.toSet()
+        return query.map { it.toDomain() }
     }
 }

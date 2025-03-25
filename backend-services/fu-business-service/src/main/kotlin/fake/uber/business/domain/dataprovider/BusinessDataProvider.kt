@@ -1,6 +1,7 @@
 package fake.uber.business.domain.dataprovider
 
 import fake.uber.business.domain.entity.Business
+import fake.uber.libs.apiresponse.Slice
 import java.util.UUID
 
 interface BusinessDataProvider {
@@ -12,5 +13,5 @@ interface BusinessDataProvider {
         radius: Int,
         page: Long,
         size: Long,
-    ): Set<Business>
+    ): Slice<Business>
 }

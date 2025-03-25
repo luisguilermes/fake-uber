@@ -26,6 +26,8 @@ spring:
     jdbc:
       initialize-schema: never
     job-store-type: jdbc
+  jackson:
+    default-property-inclusion: non_null
 
 #management:
 #  server:
