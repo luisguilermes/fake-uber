@@ -13,7 +13,10 @@ plugins {
 rootProject.name = "backend-services"
 
 include(
+    "fu-accounting-service",
     "fu-business-service",
+    "fu-consumer-service",
     "fu-libs:fu-api-response-spring-boot-starter",
+    "fu-order-service",
     "fu-supply-service",
 )
