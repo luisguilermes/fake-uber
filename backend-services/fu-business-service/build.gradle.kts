@@ -8,15 +8,17 @@ plugins {
 }
 
 dependencies {
-
-    implementation(libs.spring.boot.starter.web)
-    implementation(libs.spring.boot.starter.jbc)
     implementation(project(":fu-libs:fu-api-response-spring-boot-starter"))
 
+    implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.jbc)
+    implementation(libs.prometheus.registry)
     implementation(libs.postgresql)
     implementation(libs.postgis.jdbc) {
         exclude(group = "org.postgresql", module = "postgresql")
     }
     implementation(libs.liquibase)
+
     testImplementation(libs.spring.boot.starter.test)
 }

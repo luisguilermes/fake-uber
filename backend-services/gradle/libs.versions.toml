@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.0.21"
 ktlint = "12.1.1"
+prometheus = "1.14.5"
 spring-boot = "3.4.3"
 spring-dependency-management = "1.1.7"
 test-logger = "3.2.0"
@@ -20,9 +21,12 @@ liquibase = { module = "org.liquibase:liquibase-core", version = "4.31.0" }
 # Spring Boot
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot" }
 spring-boot-autoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot" }
 spring-boot-starter-jbc = { module = "org.springframework.boot:spring-boot-starter-jdbc", version.ref = "spring-boot" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot"}
+
+prometheus-registry = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "prometheus" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
