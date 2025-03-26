@@ -1,8 +1,5 @@
 package fake.uber.libs.apiresponse
 
-import com.fasterxml.jackson.annotation.JsonInclude
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 data class PagedResponse<T>(
     val status: String,
     val message: String,
