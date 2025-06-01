@@ -27,11 +27,11 @@ services:
         - prometheus
       restart: unless-stopped
 
-    fu-business-service:
+    merchant-profile-svc:
         build:
           context: ../
-          dockerfile: service-business.Dockerfile
-        container_name: fu-business-service
+          dockerfile: ../squad-merchant-merchant-profile-svc.Dockerfile
+        container_name: merchant-profile-svc
         deploy:
           resources:
             limits:
@@ -42,7 +42,7 @@ services:
               memory: "256M"  # Reserva 256MB de RAM
         environment:
           SPRING_PROFILES_ACTIVE: dev
-          SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/business_db
+          SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/merchant_profile_db
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: postgres
         depends_on:
