@@ -8,9 +8,13 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":fu-libs:fu-kafka-avro-schemas"))
+
     implementation(libs.spring.boot.starter.actuator)
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.jpa)
+    implementation(libs.spring.kafka)
+
     implementation(libs.prometheus.registry)
     implementation(libs.postgresql)
     implementation(libs.postgis.jdbc)

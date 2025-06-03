@@ -1,0 +1,53 @@
+server:
+  port: 18080
+  shutdown: graceful
+
+spring:
+  profiles:
+    active: local
+  main:
+    banner-mode: "off"
+  application:
+    name: customer-order-svc
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_order_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  jackson:
+    default-property-inclusion: non_null
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    properties:
+      schema.registry.url: http://localhost:8081
+      specific.avro.reader: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+
+management:
+  server:
+    port: 8081
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: db
+  endpoints:
+    web:
+      base-path: "/"
+      exposure:
+        include: prometheus,health

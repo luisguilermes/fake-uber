@@ -1,0 +1,8 @@
+{
+  "type": "record",
+  "name": "OrderCreatedEvent",
+  "namespace": "fake.uber.libs.avro_schemas.demand",
+  "fields": [
+    { "name": "id", "type": "string" }
+  ]
+}

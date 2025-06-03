@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "PaymentRequestedEvent",
+  "namespace": "fake.uber.libs.avro_schemas.accounting",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": {
+        "type": "bytes",
+        "logicalType": "uuid"
+      }
+    }
+  ]
+}

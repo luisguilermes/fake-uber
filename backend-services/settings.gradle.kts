@@ -8,6 +8,7 @@ rootProject.name = "backend-services"
 include(
     // Common libraries
     "fu-libs:fu-api-response-spring-boot-starter",
+    "fu-libs:fu-kafka-avro-schemas",
     // Accounting services
     "fu-squad-accounting",
     // Delivery services
@@ -19,6 +20,8 @@ include(
     "fu-squad-logistics",
     // Merchant services
     "fu-squad-merchant:merchant-profile-svc",
+    // Ride-hailing services
+    "fu-squad-ride-hailing:ride-order-svc",
     // Supply services
     "fu-squad-supply:availability-svc",
     "fu-squad-supply:driver-performance-svc",
